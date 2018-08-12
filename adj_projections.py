@@ -1,14 +1,9 @@
-import common as c
+import constants as c
 
 import pandas as pd
 import numpy as np
 import json
 
-
-def read_json(league: str, league_file: str) -> dict:
-    with open("{}/{}.json".format(league, league_file)) as f:
-        data = json.load(f)
-    return data
 
 
 def get_projections(projections_file: str):
@@ -20,14 +15,7 @@ def adj_scoring(df: pd.DataFrame, score_keys: list, score_vals: np.array):
     return df
 
 
-def separate_kv(d: dict) -> ([str], [str]):
-    keys = list(d)
-    values = [d[key] for key in keys]
-    return keys, values
-
-
-def separate_names_teams_pos(df: pd.DataFrame) -> pd.DataFrame:
-    player_names = df[c.PLAYER].values
+def separate_names_teams_pos(player_names: np.array) -> ([str], [str], [str]):
     names = []
     teams = []
     positions = []
@@ -37,10 +25,11 @@ def separate_names_teams_pos(df: pd.DataFrame) -> pd.DataFrame:
         names.append(name)
         teams.append(team)
         positions.append(position)
-    df[c.PLAYER] = names
-    df.insert(2, c.TEAM, teams)
-    df.insert(3, c.POS, positions)
-    return df
+    # names_series[c.PLAYER] = names
+    # names_series.insert(2, c.TEAM, teams)
+    # names_series.insert(3, c.POS, positions)
+    return names, teams, positions
+
 
 def sort_by_pts(df: pd.DataFrame) -> pd.DataFrame:
     return df.sort_values(c.POINTS, ascending=False)
