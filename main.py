@@ -4,6 +4,7 @@ import util
 import constants as c
 
 import numpy as np
+import pandas as pd
 
 
 def main():
@@ -14,9 +15,15 @@ def main():
     score_keys, score_vals = util.separate_kv(scoring_dict)
     pos_dataframe_dict = {}
 
+    flex_points = []
+    flex_starters = 10 + sum(roster_dict[f] * roster_dict[c.LEAGUE_SIZE]
+                             for f in c.FLEX_POSITIONS)
+
     for position, pos_df in prj.items():
+        pos_df = pos_df.drop(c.POINTS, axis=1)
+
         # Clean up player names
-        names, teams, pos = adj.separate_names_teams_pos(pos_df)
+        names, teams, pos = adj.separate_names_teams_pos(pos_df[c.PLAYER])
         pos_df[c.PLAYER] = names
         pos_df.insert(2, c.TEAM, teams)
         pos_df.insert(3, c.POS, pos)
@@ -24,9 +31,29 @@ def main():
         # Calculate league points and remove original points
         new_pts = adj.adj_scoring(pos_df[score_keys], np.array(score_vals))
         pos_df.insert(4, c.POINTS, new_pts)
-
+        pos_df[c.RANK] = pos_df[c.POINTS].rank(method="max", ascending=False)
+        pos_df = pos_df.set_index(c.RANK)
+        pos_df.insert(4, "PPG", nrm.calc_weekly(new_pts))
         pos_df = adj.sort_by_pts(pos_df)
+
+        # Add plus and norm stats
+        pos_starters = roster_dict[position] * roster_dict[c.LEAGUE_SIZE]
+        pos_plus = nrm.calc_plus(pos_df[c.POINTS], pos_starters)
+        pos_df.insert(5, "POS+", pos_plus)
+
+        if position in c.FLEX_POSITIONS:
+            top_values = pos_df[c.POINTS].iloc[:flex_starters].values.tolist()
+            flex_points.extend(top_values)
+        pos_df = pos_df.round(3)
         pos_dataframe_dict[position] = pos_df
+
+    flex_points.sort(reverse=True)
+    flex_points = flex_points[:flex_starters]
+
+    for pos in c.FLEX_POSITIONS:
+        pos_df = pos_dataframe_dict[pos]
+        flex_plus = pos_df[c.POINTS].divide(pd.Series(flex_points).mean())
+        pos_df.insert(6, "FLEX+", flex_plus.round(3))
 
     for pos, pos_df in pos_dataframe_dict.items():
         print(pos)
