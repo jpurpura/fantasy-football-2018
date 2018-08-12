@@ -1,29 +1,29 @@
 import adj_projections as adj
-import common as c
+import norm_projections as nrm
+import util
+import constants as c
 
-import sys
 import numpy as np
 
 
-def get_league_name():
-    return sys.argv[1]
-
-
 def main():
-    league = get_league_name()
+    league = util.get_league_name()
     prj = adj.get_projections(c.PROJECTIONS_PATH)
-    scoring_dict = adj.read_json(league, c.SCORING)
-    score_keys, score_vals = adj.separate_kv(scoring_dict)
-    adj_prj = {}
+    scoring_dict = util.read_json(league, c.SCORING)
+    roster_dict = util.read_json(league, c.ROSTER)
+    score_keys, score_vals = util.separate_kv(scoring_dict)
+    pos_dataframe_dict = {}
     for position, pos_df in prj.items():
         pos_df = adj.adj_scoring(pos_df, score_keys, np.array(score_vals))
-        pos_df = adj.separate_names_teams_pos(pos_df)
+        names, teams, pos = adj.separate_names_teams_pos(pos_df)
+        pos_df[c.PLAYER] = names
+        pos_df[c.TEAM] = teams
+        pos_df[c.POS] = pos
         pos_df = adj.sort_by_pts(pos_df)
-        adj_prj[position] = pos_df
-    for pos, pos_df in adj_prj.items():
+        pos_dataframe_dict[position] = pos_df
+    for pos, pos_df in pos_dataframe_dict.items():
         print(pos)
         print(pos_df)
-
 
 
 if __name__ == "__main__":
