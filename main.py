@@ -17,8 +17,8 @@ def main():
         pos_df = adj.adj_scoring(pos_df, score_keys, np.array(score_vals))
         names, teams, pos = adj.separate_names_teams_pos(pos_df)
         pos_df[c.PLAYER] = names
-        pos_df[c.TEAM] = teams
-        pos_df[c.POS] = pos
+        pos_df.insert(2, c.TEAM, teams)
+        pos_df.insert(3, c.POS, pos)
         pos_df = adj.sort_by_pts(pos_df)
         pos_dataframe_dict[position] = pos_df
     for pos, pos_df in pos_dataframe_dict.items():
