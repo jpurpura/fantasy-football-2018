@@ -5,15 +5,12 @@ import numpy as np
 import json
 
 
-
 def get_projections(projections_file: str):
     return pd.read_excel(projections_file, sheet_name=None)
 
 
-def adj_scoring(df: pd.DataFrame, score_keys: list, score_vals: np.array):
-    df[c.POINTS] = df[score_keys].apply(lambda r: r.dot(score_vals), axis=1)
-    return df
-
+def adj_scoring(df_scoring: pd.DataFrame, score_vals: np.array):
+    return df_scoring.apply(lambda r: r.dot(score_vals), axis=1)
 
 def separate_names_teams_pos(player_names: np.array) -> ([str], [str], [str]):
     names = []
