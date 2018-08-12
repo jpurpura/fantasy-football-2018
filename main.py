@@ -1,13 +1,8 @@
 import adj_projections as adj
+import common as c
 
 import sys
-import pandas as pd
 import numpy as np
-
-
-SCORING = "scoring"
-ROSTER = "roster"
-PROJECTIONS_FILE = "espn_projections_aug_src.xlsx"
 
 
 def get_league_name():
@@ -19,7 +14,7 @@ if __name__ == "__main__":
     # adj.read_json(get_league_name(), SCORING_FILE)
     df = adj.get_projections("projections/espn_projections_aug_src.xlsx")
     league = get_league_name()
-    scoring_dict = adj.read_json(league, SCORING)
+    scoring_dict = adj.read_json(league, c.SCORING)
     score_keys, score_vals = adj.separate_kv(scoring_dict)
     # print(df["QB"])
     # print(np.array(score_vals))
