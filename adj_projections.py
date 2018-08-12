@@ -2,7 +2,6 @@ import constants as c
 
 import pandas as pd
 import numpy as np
-import json
 
 
 def get_projections(projections_file: str):
@@ -11,6 +10,7 @@ def get_projections(projections_file: str):
 
 def adj_scoring(df_scoring: pd.DataFrame, score_vals: np.array):
     return df_scoring.apply(lambda r: r.dot(score_vals), axis=1)
+
 
 def separate_names_teams_pos(player_names: np.array) -> ([str], [str], [str]):
     names = []
