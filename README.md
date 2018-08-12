@@ -3,8 +3,8 @@
 
 ## Usage
 1. Create a directory with the league name, e.g. "fries".
-2. Add a scoring.json for the league's scoring settings, example shown in fries/scoring.json
-3. Add a roster.json for the league's roster settings, example shown in fries/roster.json
+2. Add a scoring.json to the league's directory for the league's scoring settings, example shown in fries/scoring.json
+3. Add a roster.json to the league's directory for the league's roster settings, example shown in fries/roster.json
 3. Run script:
 `python main.py league_name`
 
