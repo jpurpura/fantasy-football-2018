@@ -6,6 +6,7 @@ import constants as c
 import numpy as np
 import pandas as pd
 
+import datetime
 
 def main():
     league = util.get_league_name()
@@ -55,9 +56,15 @@ def main():
         flex_plus = pos_df[c.POINTS].divide(pd.Series(flex_points).mean())
         pos_df.insert(6, "FLEX+", flex_plus.round(3))
 
+    print(pos_df)
+    today_date = datetime.datetime.today().strftime('%Y-%m-%d')
+    excel_file = "{}/updated_projections{}.xlsx".format(league, today_date)
+    writer = pd.ExcelWriter(excel_file, engine="xlsxwriter")
+    workbook = writer.book
     for pos, pos_df in pos_dataframe_dict.items():
-        print(pos)
-        print(pos_df)
+        worksheet = workbook.add_worksheet(pos)
+        writer.sheets[pos] = worksheet
+        pos_df.to_excel(writer, sheet_name=pos)
 
 
 if __name__ == "__main__":
