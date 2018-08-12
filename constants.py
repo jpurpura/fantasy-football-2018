@@ -3,7 +3,9 @@ PLAYER = "PLAYER"
 TEAM = "TM"
 POS = "POS"
 OFF_PRJ = ["QB", "RB", "WR", "TE"]
-FLEX = ["RB", "WR", "TE"]
+FLEX = "FLEX"
+FLEX_POSITIONS = {"RB", "WR", "TE"}
+RANK = "RNK"
 
 SCORING = "scoring"
 ROSTER = "roster"
