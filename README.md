@@ -15,6 +15,6 @@
 Example:
   WR John Smith has a `POS+` of 120. John Smith is projected for 20% more points than the average starting WR in the specified league.
  
- `FLEX+` The player's projected points compared to the projected points of the average starter of all FLEX positions.
+ `FLEX+` The player's projected points compared to the projected points of the average starter of all FLEX positions
  Example:
-  RB John Doe has a `FLEX+` of 110. John Doe is projected for 10% more points than the average starting RB, WR, TE, and RB/WR/TE slots.
+  RB John Doe has a `FLEX+` of 110. John Doe is projected for 10% more points than the average starting RB, WR, TE, and RB/WR/TE slots in the specified league..
