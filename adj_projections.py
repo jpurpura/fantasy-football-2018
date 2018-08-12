@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import json
 
+
 def read_json(league: str, league_file: str) -> dict:
     with open("{}/{}.json".format(league, league_file)) as f:
         data = json.load(f)
@@ -40,3 +41,6 @@ def separate_names_teams_pos(df: pd.DataFrame) -> pd.DataFrame:
     df.insert(2, c.TEAM, teams)
     df.insert(3, c.POS, positions)
     return df
+
+def sort_by_pts(df: pd.DataFrame) -> pd.DataFrame:
+    return df.sort_values(c.POINTS, ascending=False)
