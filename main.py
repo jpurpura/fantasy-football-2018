@@ -58,7 +58,7 @@ def main():
 
     print(pos_df)
     today_date = datetime.datetime.today().strftime('%Y-%m-%d')
-    excel_file = "{}/updated_projections{}.xlsx".format(league, today_date)
+    excel_file = "{}/updated_projections_{}.xlsx".format(league, today_date)
     writer = pd.ExcelWriter(excel_file, engine="xlsxwriter")
     workbook = writer.book
     for pos, pos_df in pos_dataframe_dict.items():
