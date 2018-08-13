@@ -25,4 +25,4 @@ RB John Doe has a `FLEX+` of 110. John Doe is projected for 10% more points than
 `RB1+`, `RB2+`, etc.
 The player's projected points compared to the projected points of the average starter at that slot.  
 *Example:*  
-  WR John Smith has a `RB1+` of 110 and a `RB2+` of 130. John Smith is projected for 10% more points than the average starting RB1 and 30% more points than the average starting RB2 in the specified league.
+  WR John Smith has a `WR1+` of 110 and a `WR2+` of 130. John Smith is projected for 10% more points than the average starting WR1 and 30% more points than the average starting WR2 in the specified league.
